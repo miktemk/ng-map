@@ -1,0 +1,47 @@
+.maproot {
+  position:relative;
+}
+.mapbg {
+  position:relative;
+  width:100%;
+}
+.mappoint {
+  position:absolute;
+  cursor: pointer;
+}
+.mappoint img {
+  width:30px;
+  float:left;
+}
+.mappoint span {
+  float:left;
+  color: #000;
+  background-color: #f5b;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -khtml-border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+}
+.mappoint:hover img {
+  width:50px;
+  margin-left: -15px;
+  margin-top: -15px;
+}
+.mappoint.back-button {
+  color: #fff;
+  background-color: #000;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -khtml-border-radius: 5px;
+  padding: 5px;
+  top: 5px;
+  width: 20%;
+  left: 40%;
+  text-align: center;
+}
+.mappoint.back-button:hover {
+  color: #ff0;
+}

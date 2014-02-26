@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <title>Michel's map plugin</title>
+    <link rel="stylesheet" type="text/css" href="map.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+  <script type="text/javascript" src="ng-map.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="showdown.js"></script>
+  <script type="text/javascript" src="ng-showdown.js"></script>
+</head>
+<body ng-app>
+<markdown>
+Michel's map plugin
+===================
+Click anywhere on this map to progress through my journeys!!!
+
+WARNING: this map is not accurate, nor are of any accuracy the specified coordinates, nor do I care :P
+</markdown>
+
+<div ng-controller="mapTest">
+	<!-- <div ng-map="http://myselfasiam.com/travel/content/map/map.json" ng-map-options="{delay:1000}"></div> -->
+	<div ng-map="mapJson" ng-map-options="{delay:300, homeText:'Back to World, BEBE!', stickerTemplate:'sticky/sticky{num}.png', nStickers:3, loadingText:'Loading bebe...'}"></div>
+</div>
+
+<markdown>
+### How it works
+
+This widget uses the [AngularJS framework] to function.
+
+ - You need to add ng-app="mikhail" to your "body" tag in order to get it to work.
+ - The ng-map attribute is the AngularJS directive that does all the main work. This attribute takes a URL of the Map JSON structure.
+   Check out the one used in [this example](map.json).
+ - You can optionally use the ng-map-options attribute to specify some settings to the ng-map directive. The following options are available currently (with their defaults):
+   - delay: 300
+   - stickerTemplate: "img/sticky{num}.png"
+   - nStickers: 3
+   - homeText: "Back to top"
+   - loadingText: "Loading..."
+
+### Map JSON format
+
+The map consists of an array of screens. Each screen has an "id", an image URL and a list of points.
+Each point has an (x,y) coordinate specified in percent, so (100, 100) would mean the point is in the
+bottom-right corner. Each point then has the "href" property which is used for navigation.
+This map widget supports 2 types of navigation:
+
+ - **Within-map**: When href is set to the id of one of the screens. By clicking on a point you then navigate to another screen within the same map control.
+   You like my cool fading effect? I noticed a glitch on Firefox, please let me know if you find it too.
+ - **External**: When you specify an href that starts with "http://" or "https://" then that page is loaded.
+ - **External in a new tab**: An optional "target" property of the point object, when set to target="_blank" can be used to open the href link in a new
+   tab/window. In this example Japan, France and Italy all have target="_blank" and will open in a new tab. Everyone else will just navigate to a new page
+
+### Compatibility with IE7
+
+Eeeeerr! None. Don't use it.
+
+[AngularJS framework]: http://angularjs.org/
+</markdown>
+
+</body>
+</html>
