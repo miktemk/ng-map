@@ -3,7 +3,7 @@ function mapTest($scope) {
 	  { "id": "world",
 		"img": "img/world.jpg",
 		"points": [
-		  { "href": "europe", "label":"Europe", "x":55, "y":25 },
+		  { "href": "europe", "label":"Europe", "x":55, "y":25, sticker: "sticky/sticky1.png" },
 		  { "href": "caribbean", "label":"Carribbean", "x":20, "y":55 },
 		  { "href": "http://www.japan-guide.com/", "target":"_blank", "label":"Japan", "x":95, "y":40 }
 		]

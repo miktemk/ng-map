@@ -1,0 +1,25 @@
+.map-editor-json-panel {
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	width: 100%;
+	height: 600px;
+}
+.editor-points {
+	padding-left: 30px;
+}
+.nice-flat-checkbox  {
+	width: 30px;
+	height: 24px;
+	border-radius: 0;
+}
+.point-form-row {
+	border-bottom: 1px solid #ccc;
+}
+.additional-options i {
+	padding: 0 5px;
+}
+.side-marginz {
+	padding: 0 30px;
+}
+.bottom-space {
+	margin-bottom: 10px;
+}

@@ -41,7 +41,7 @@ angular.module('ng').directive('ngSrcFadeEffect', function() {
 				});
 			});
 		}
-	};//*/
+	};
 });
 
 angular.module('ng').directive('ngMap', function($http) {
@@ -58,7 +58,10 @@ angular.module('ng').directive('ngMap', function($http) {
 '      ng-src-fade-effect-after="activateLabels"'+
 '      width="100%" />'+
 '  </div>'+
-'  <div class="mappoint" ng-show="showLabels" ng-repeat="point in curMap.points" ng-style="{top:point.y+\'%\', left:point.x+\'%\'}" ng-click="gotoMap(point.href, point.target)">'+
+'  <div class="mappoint" ng-show="showLabels" ng-repeat="point in curMap.points"'+
+'      ng-style="{top:point.y+\'%\', left:point.x+\'%\'}"'+
+'      ng-click="gotoMap(point.href, point.target)"'+
+'      ng-map-editor-point-drag="point" >'+
 '    <img ng-src="{{point.img}}" />'+
 '    <span>{{point.label}}</span>'+
 '  </div>'+
@@ -75,7 +78,8 @@ angular.module('ng').directive('ngMap', function($http) {
 				stickerTemplate: "img/sticky{num}.png",
 				nStickers: 3,
 				homeText: "Back to top",
-				loadingText: "Loading..."
+				loadingText: "Loading...",
+				editMode: false
 			}, $scope.$eval(attrs.ngMapOptions));
 
 			function safeApply($scope, callback) {
@@ -92,8 +96,10 @@ angular.module('ng').directive('ngMap', function($http) {
 					// preload images
 					var pic1= new Image(); 
 					pic1.src = curMap.img;
-					$.each(this.points, function(index, elem) {
-						this.img = opt.stickerTemplate.replace("{num}", Math.floor((Math.random()*opt.nStickers)+1));
+					$.each(this.points, function(index, point) {
+						this.img = point.sticker
+							? point.sticker
+							: opt.stickerTemplate.replace("{num}", Math.floor((Math.random()*opt.nStickers)+1));
 						var bounds = $.extend({ x:0, y:0, w:100, h:100 }, curMap.bounds);
 						this.x = 100 * (this.x - bounds.x) / bounds.w;
 						this.y = 100 * (this.y - bounds.y) / bounds.h;
@@ -120,6 +126,8 @@ angular.module('ng').directive('ngMap', function($http) {
 				if (typeof(href) == "undefined" || href == null || href == "")
 					return;
 				var mapzz = $.grep($scope.maps, function (x) { return (x.id == href); });
+				if (mapzz.length == 0 && opt.editMode)
+					return;
 				if (mapzz.length == 0) {
 					if (href.toLowerCase().indexOf("http://") != -1 || href.toLowerCase().indexOf("https://") != -1) {
 						if (typeof(target) != "undefined" && target == "_blank") {

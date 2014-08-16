@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+    <title>Map editor</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/map.css" />
+    <link rel="stylesheet" type="text/css" href="css/map-editor.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+  <script type="text/javascript" src="js/ng-map.js"></script>
+  <script type="text/javascript" src="js/ng-map-editor.js"></script>
+  <script type="text/javascript" src="js/showdown.js"></script>
+  <script type="text/javascript" src="js/ng-showdown.js"></script>
+</head>
+<body ng-app>
+	<div class="container-fluid side-marginz">
+		<div class="row">
+			<div class="col-md-12">
+<markdown>
+Michel's map editor
+===================
+</markdown>
+
+<div ng-controller="mapEditor">
+	<div class="row bottom-space">
+		<div class="col-sm-6">
+			<button ng-model="sideBySide" toggle-button >Side-by-side</button>
+			<button ng-model="showActualJson" toggle-button >Show JSON result</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="ng-class: {'col-sm-6':sideBySide, 'col-sm-12':!sideBySide}" ng-map-editor="mapJson">
+			
+		</div>
+		<div class="ng-class: {'col-sm-6':sideBySide, 'col-sm-12':!sideBySide}">
+			<div ng-hide="showActualJson">
+				<div ng-map="mapJson" ng-map-options="{delay:300, homeText:'Back to World, BEBE!', stickerTemplate:'sticky/sticky{num}.png', nStickers:3, loadingText:'Loading bebe...', editMode: true}"></div>
+			</div>
+			<div ng-show="showActualJson">
+				<textarea class="map-editor-json-panel" readonly="readonly" text-area-highlight-when-clicked>{{ mapJson | ngMapEditorCleanupJson | json }}</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+<markdown>
+How to use
+----------
+
+You can drag the points on the map. Use the UI to enter the metadata. TATA!
+</markdown>
+			</div>
+		</div>
+	</div>
+
+
+
+<script type="text/ng-template" id="ngMapEditor-template.html">
+	<div ng-repeat="curMap in ngMapEditor">
+		<div class="form-inline">
+			<div class="form-group">
+				<h4>Image:</h4>
+			</div>
+			<div class="form-group">
+				<input class="form-control" placeholder="ID" ng-model="curMap.id" />
+			</div>
+			<div class="form-group">
+				<input class="form-control" placeholder="Image" ng-model="curMap.img" />
+			</div>
+			<div class="form-group pull-right">
+				<button class="btn btn-default" ng-click="collapsed=!collapsed">
+					<i class="glyphicon" ng-class="{'glyphicon-chevron-up': collapsed, 'glyphicon-chevron-down': !collapsed}"></i>
+				</button>
+			</div>
+		</div>
+		<div ng-hide="collapsed">
+			<h4>Points</h4>
+			<div class="editor-points">
+				<div ng-repeat="point in curMap.points">
+					<div class="point-form-row">
+						<div class="form-inline">
+							<div class="form-group">
+								<input class="form-control" placeholder="Label" ng-model="point.label" />
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="href" ng-model="point.href" />
+							</div>
+							<div class="form-group pull-right">
+								<span class="additional-options">
+									<i class="glyphicon glyphicon-tags" title="target='{{ point.target }}'" ng-show="point.target"></i>
+									<i class="glyphicon glyphicon-picture" title="sticker='{{ point.sticker }}'" ng-show="point.sticker"></i>
+								</span>
+								<button class="btn btn-default" toggle-button ng-model="showAdvancedConfig" title="Show advanced options"><i class="glyphicon glyphicon-cog"></i>...</button>
+								<button class="btn btn-danger" ng-click="deletePoint(curMap, point)"><i class="glyphicon glyphicon-trash"></i></button>
+							</div>
+						</div>
+						<div class="form-horizontal" ng-show="showAdvancedConfig">
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Target</label>
+								<div class="col-sm-10">
+									<input class="form-control" placeholder="_blank maybe?" ng-model="point.target" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Sticker</label>
+								<div class="col-sm-10">
+									<input class="form-control" placeholder="Image URL of sticker" ng-model="point.sticker" />
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="form-inline">
+					<div class="form-group">
+						<button class="btn btn-success" ng-click="addPoint(curMap)"><i class="glyphicon glyphicon-plus"></i> Add point</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-danger" ng-click="deleteMap(curMap)"><i class="glyphicon glyphicon-trash"></i> Delete map image</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr/>
+	</div>
+	<button class="btn btn-success" ng-click="addMap()"><i class="glyphicon glyphicon-plus"></i> Add a new map image</button>
+	<br/>
+	<br/>
+</script>
+</body>
+</html>
