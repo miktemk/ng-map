@@ -35,9 +35,11 @@ Michel's map editor
 		</div>
 		<div class="ng-class: {'col-sm-6':sideBySide, 'col-sm-12':!sideBySide}">
 			<div ng-hide="showActualJson">
-				<div ng-map="mapJson" ng-map-options="{delay:300, homeText:'Back to World, BEBE!', stickerTemplate:'sticky/sticky{num}.png', nStickers:3, loadingText:'Loading bebe...', editMode: true}"></div>
+				<div ng-map="mapJson" ng-map-options="{delay:300, homeText:'Up!', stickerTemplate:'sticky/sticky{num}.png', nStickers:3, loadingText:'Loading bebe...', editMode: true}"></div>
 			</div>
 			<div ng-show="showActualJson">
+				<input type="text" class="form-control" value="{{mapJson | ngMapEditorCleanupJson | json | nospace}}"  text-area-highlight-when-clicked />
+				<br/>
 				<textarea class="map-editor-json-panel" readonly="readonly" text-area-highlight-when-clicked>{{ mapJson | ngMapEditorCleanupJson | json }}</textarea>
 			</div>
 		</div>
@@ -74,7 +76,16 @@ You can drag the points on the map. Use the UI to enter the metadata. TATA!
 				</button>
 			</div>
 		</div>
-		<div ng-hide="collapsed">
+		<div ng-hide="collapsed" ng-init="collapsed=true">
+			<h4>Data</h4>
+			<div class="form-inline">
+				<div class="form-group">
+					<h4>On back:</h4>
+				</div>
+				<div class="form-group">
+					<input class="form-control" placeholder="back link" ng-model="curMap.backLink" />
+				</div>
+			</div>
 			<h4>Points</h4>
 			<div class="editor-points">
 				<div ng-repeat="point in curMap.points">

@@ -65,7 +65,7 @@ angular.module('ng').directive('ngMap', function($http) {
 '    <img ng-src="{{point.img}}" />'+
 '    <span>{{point.label}}</span>'+
 '  </div>'+
-'  <div class="mappoint back-button" ng-show="showHomeButton" ng-click="gotoMap(hrefHomeButton)">'+
+'  <div class="mappoint back-button" ng-show="showHomeButton" ng-click="gotoMapBack(curMap)">'+
 '    {{homeText}}'+
 '  </div>'+
 '</div>',
@@ -77,7 +77,7 @@ angular.module('ng').directive('ngMap', function($http) {
 				delay: 300,
 				stickerTemplate: "img/sticky{num}.png",
 				nStickers: 3,
-				homeText: "Back to top",
+				homeText: "Back",
 				loadingText: "Loading...",
 				editMode: false
 			}, $scope.$eval(attrs.ngMapOptions));
@@ -142,6 +142,12 @@ angular.module('ng').directive('ngMap', function($http) {
 				$scope.showHomeButton = false;
 				$scope.curMap = mapzz[0];
 			};
+			$scope.gotoMapBack = function (curMap) {
+				var link = curMap.backLink;
+				if (!link || link == '')
+					link = $scope.hrefHomeButton;
+				$scope.gotoMap(link);
+			}
 			$scope.activateLabelsInner = function () {
 				if (typeof($scope.maps) == "undefined")
 					return;

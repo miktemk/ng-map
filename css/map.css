@@ -38,8 +38,8 @@
   -khtml-border-radius: 5px;
   padding: 5px;
   top: 5px;
-  width: 20%;
-  left: 40%;
+  width: 10%;
+  left: 5px;
   text-align: center;
 }
 .mappoint.back-button:hover {
